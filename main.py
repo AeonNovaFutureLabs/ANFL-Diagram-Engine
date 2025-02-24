@@ -16,6 +16,7 @@ with open("styles.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 def load_sample_diagram():
+    """Load sample diagram from assets."""
     with open("attached_assets/Pasted-graph-TB-Physical-Layer-subgraph-Physical-Physical-Infrastructure-direction-TB-1740366126683.txt", "r") as f:
         return f.read()
 
@@ -42,12 +43,11 @@ def main():
 
     if diagram_input:
         try:
-            # Process the input based on type
+            # Process input based on type
             if input_type == "Mermaid":
                 diagrams = DiagramProcessor.parse_mermaid(diagram_input)
                 combined_diagram = DiagramProcessor.combine_diagrams(diagrams)
-                themed_diagram = DiagramProcessor.apply_theme(combined_diagram)
-                processed_diagram = themed_diagram
+                processed_diagram = DiagramProcessor.apply_theme(combined_diagram)
             else:
                 processed_diagram = diagram_input
 
@@ -69,7 +69,6 @@ def main():
                 ['PDF', 'Notion', 'Obsidian', 'Linear', 'LaTeX']
             )
 
-            # Handle exports
             try:
                 if export_format == 'PDF':
                     pdf = ExportHandler.create_pdf(processed_diagram)
