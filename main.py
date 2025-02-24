@@ -41,54 +41,68 @@ def main():
     tab1, tab2 = st.tabs(["Preview", "Code"])
 
     if diagram_input:
-        with tab1:
-            st.markdown("### Visualization")
+        try:
+            # Process the input based on type
             if input_type == "Mermaid":
                 diagrams = DiagramProcessor.parse_mermaid(diagram_input)
                 combined_diagram = DiagramProcessor.combine_diagrams(diagrams)
                 themed_diagram = DiagramProcessor.apply_theme(combined_diagram)
-                st.markdown(f"```mermaid\n{themed_diagram}\n```")
+                processed_diagram = themed_diagram
             else:
-                st.latex(diagram_input)
+                processed_diagram = diagram_input
 
-        with tab2:
-            st.markdown("### Source Code")
-            st.code(diagram_input, language="mermaid" if input_type == "Mermaid" else "latex")
+            with tab1:
+                st.markdown("### Visualization")
+                if input_type == "Mermaid":
+                    st.markdown(f"```mermaid\n{processed_diagram}\n```")
+                else:
+                    st.latex(processed_diagram)
 
-        # Export options
-        st.sidebar.markdown("### Export Options")
-        export_format = st.sidebar.selectbox(
-            "Export Format",
-            ['PDF', 'Notion', 'Obsidian', 'Linear', 'LaTeX']
-        )
+            with tab2:
+                st.markdown("### Source Code")
+                st.code(diagram_input, language="mermaid" if input_type == "Mermaid" else "latex")
 
-        if export_format == 'PDF':
-            pdf = ExportHandler.create_pdf(themed_diagram if input_type == "Mermaid" else diagram_input)
-            st.sidebar.download_button(
-                "Download PDF",
-                pdf,
-                "diagram.pdf",
-                "application/pdf"
+            # Export options
+            st.sidebar.markdown("### Export Options")
+            export_format = st.sidebar.selectbox(
+                "Export Format",
+                ['PDF', 'Notion', 'Obsidian', 'Linear', 'LaTeX']
             )
-        elif export_format == 'LaTeX':
-            latex_output = ExportHandler.create_latex(themed_diagram) if input_type == "Mermaid" else diagram_input
-            st.sidebar.download_button(
-                "Download LaTeX",
-                latex_output.encode(),
-                "diagram.tex",
-                "text/plain"
-            )
-        else:
-            platform_output = PlatformConverter.convert_for_platform(
-                themed_diagram if input_type == "Mermaid" else diagram_input,
-                export_format
-            )
-            st.sidebar.download_button(
-                f"Download for {export_format}",
-                platform_output.encode(),
-                f"diagram_{export_format.lower()}.md",
-                "text/markdown"
-            )
+
+            # Handle exports
+            try:
+                if export_format == 'PDF':
+                    pdf = ExportHandler.create_pdf(processed_diagram)
+                    st.sidebar.download_button(
+                        "Download PDF",
+                        pdf,
+                        "diagram.pdf",
+                        "application/pdf"
+                    )
+                elif export_format == 'LaTeX':
+                    latex_output = ExportHandler.create_latex(processed_diagram) if input_type == "Mermaid" else processed_diagram
+                    st.sidebar.download_button(
+                        "Download LaTeX",
+                        latex_output.encode(),
+                        "diagram.tex",
+                        "text/plain"
+                    )
+                else:
+                    platform_output = PlatformConverter.convert_for_platform(
+                        processed_diagram,
+                        export_format
+                    )
+                    st.sidebar.download_button(
+                        f"Download for {export_format}",
+                        platform_output.encode(),
+                        f"diagram_{export_format.lower()}.md",
+                        "text/markdown"
+                    )
+            except Exception as e:
+                st.sidebar.error(f"Error during export: {str(e)}")
+
+        except Exception as e:
+            st.error(f"Error processing diagram: {str(e)}")
 
 if __name__ == "__main__":
     main()
