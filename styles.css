@@ -1,0 +1,44 @@
+/* Custom styling for the Streamlit app */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+.stApp {
+    background-color: #E6E6E6;
+}
+
+.main {
+    padding: 2rem;
+}
+
+h1, h2, h3 {
+    color: #1A1A2E !important;
+    font-family: 'Helvetica', sans-serif;
+}
+
+.stMarkdown {
+    font-family: 'Helvetica', sans-serif;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+}
+
+pre {
+    font-family: 'JetBrains Mono', monospace !important;
+    background-color: #33334C !important;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #CD7F32;
+}
+
+.stButton button {
+    background-color: #CD7F32;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-family: 'Helvetica', sans-serif;
+}
+
+.stTextArea textarea {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.2;
+}
