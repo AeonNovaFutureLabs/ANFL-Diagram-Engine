@@ -1,17 +1,21 @@
 /* Custom styling for the Streamlit app */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
+/* Global styles */
 .stApp {
     background-color: #E6E6E6;
 }
 
+/* Main content */
 .main {
     padding: 2rem;
 }
 
+/* Typography */
 h1, h2, h3 {
     color: #1A1A2E !important;
     font-family: 'Helvetica', sans-serif;
+    letter-spacing: 0.5px;
 }
 
 .stMarkdown {
@@ -20,14 +24,17 @@ h1, h2, h3 {
     letter-spacing: 0.5px;
 }
 
+/* Code blocks */
 pre {
     font-family: 'JetBrains Mono', monospace !important;
     background-color: #33334C !important;
     padding: 1rem;
     border-radius: 8px;
     border: 1px solid #CD7F32;
+    font-size: 14px;
 }
 
+/* Buttons */
 .stButton button {
     background-color: #CD7F32;
     color: white;
@@ -35,10 +42,46 @@ pre {
     border: none;
     padding: 0.5rem 1rem;
     font-family: 'Helvetica', sans-serif;
+    transition: background-color 0.3s ease;
 }
 
+.stButton button:hover {
+    background-color: #1A1A2E;
+}
+
+/* Text areas */
 .stTextArea textarea {
     font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
     line-height: 1.2;
+    border: 1px solid #CD7F32;
+    border-radius: 8px;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 2rem;
+    background-color: transparent;
+}
+
+.stTabs [data-baseweb="tab"] {
+    font-family: 'Helvetica', sans-serif;
+    color: #1A1A2E;
+    border-radius: 4px 4px 0 0;
+}
+
+.stTabs [data-baseweb="tab-highlight"] {
+    background-color: #CD7F32;
+}
+
+/* Sidebar */
+.sidebar .sidebar-content {
+    background-color: #1A1A2E;
+    color: #E6E6E6;
+}
+
+/* Download buttons in sidebar */
+.sidebar .stDownloadButton button {
+    width: 100%;
+    margin-top: 0.5rem;
 }
