@@ -14,7 +14,7 @@ class ExportHandler:
         buffer = io.BytesIO()
         doc = SimpleDocTemplate(buffer, pagesize=letter)
         styles = getSampleStyleSheet()
-        
+
         # Custom style for diagrams
         diagram_style = ParagraphStyle(
             'DiagramStyle',
@@ -28,11 +28,11 @@ class ExportHandler:
             borderColor=colors.HexColor('#CD7F32'),
             borderWidth=1,
         )
-        
+
         elements = []
         for diagram in diagrams.split('\n\n'):
             elements.append(Paragraph(diagram, diagram_style))
-        
+
         doc.build(elements)
         buffer.seek(0)
         return buffer.getvalue()
@@ -40,4 +40,4 @@ class ExportHandler:
     @staticmethod
     def to_notion_markdown(diagrams: str) -> str:
         """Convert to Notion-compatible markdown."""
-        return f"
+        return f"```mermaid\n{diagrams}\n```"

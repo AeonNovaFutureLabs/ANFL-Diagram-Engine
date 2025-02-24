@@ -9,7 +9,7 @@ class PlatformConverter:
             'obsidian': PlatformConverter._obsidian_format,
             'linear': PlatformConverter._linear_format
         }
-        
+
         handler = platform_handlers.get(platform.lower())
         if handler:
             return handler(diagram)
@@ -18,4 +18,14 @@ class PlatformConverter:
     @staticmethod
     def _notion_format(diagram: str) -> str:
         """Format diagram for Notion."""
-        return f"
+        return f"```mermaid\n{diagram}\n```"
+
+    @staticmethod
+    def _obsidian_format(diagram: str) -> str:
+        """Format diagram for Obsidian."""
+        return f"```mermaid\n{diagram}\n```"
+
+    @staticmethod
+    def _linear_format(diagram: str) -> str:
+        """Format diagram for Linear."""
+        return f"```mermaid\n{diagram}\n```"
