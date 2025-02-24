@@ -21,7 +21,7 @@ def load_sample_diagram():
         return f.read()
 
 def main():
-    st.title("Mermaid Diagram Processor")
+    st.title("ANFL Diagram Engine") # Title changed here
 
     # Input type selection
     input_type = st.sidebar.selectbox(
@@ -43,7 +43,6 @@ def main():
 
     if diagram_input:
         try:
-            # Process input based on type
             if input_type == "Mermaid":
                 diagrams = DiagramProcessor.parse_mermaid(diagram_input)
                 combined_diagram = DiagramProcessor.combine_diagrams(diagrams)

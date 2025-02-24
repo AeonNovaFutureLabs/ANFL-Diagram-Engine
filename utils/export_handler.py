@@ -9,10 +9,17 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 class ExportHandler:
     @staticmethod
-    def create_pdf(diagrams: str) -> bytes:
+    def create_pdf(content: str) -> bytes:
         """Generate styled PDF with diagrams."""
         buffer = io.BytesIO()
-        doc = SimpleDocTemplate(buffer, pagesize=letter)
+        doc = SimpleDocTemplate(
+            buffer,
+            pagesize=letter,
+            rightMargin=72,
+            leftMargin=72,
+            topMargin=72,
+            bottomMargin=72
+        )
         styles = getSampleStyleSheet()
 
         # Custom style for diagrams
@@ -27,23 +34,28 @@ class ExportHandler:
             borderPadding=10,
             borderColor=colors.HexColor('#CD7F32'),
             borderWidth=1,
+            spaceAfter=30
         )
 
+        # Process content for PDF
         elements = []
-        for diagram in diagrams.split('\n\n'):
-            elements.append(Paragraph(diagram, diagram_style))
+        if content:
+            elements.append(Paragraph(content, diagram_style))
 
-        doc.build(elements)
-        buffer.seek(0)
-        return buffer.getvalue()
+        try:
+            doc.build(elements)
+            buffer.seek(0)
+            return buffer.getvalue()
+        except Exception as e:
+            raise Exception(f"Failed to generate PDF: {str(e)}")
 
     @staticmethod
-    def to_notion_markdown(diagrams: str) -> str:
+    def to_notion_markdown(content: str) -> str:
         """Convert to Notion-compatible markdown."""
-        return f"```mermaid\n{diagrams}\n```"
+        return f"```mermaid\n{content}\n```"
 
     @staticmethod
-    def create_latex(diagrams: str) -> str:
+    def create_latex(content: str) -> str:
         """Generate LaTeX document with TikZ diagrams."""
         from utils.latex_converter import LaTeXConverter
-        return LaTeXConverter.mermaid_to_tikz(diagrams)
+        return LaTeXConverter.mermaid_to_tikz(content)
