@@ -1,0 +1,259 @@
+graph TB
+    %% Physical Layer
+    subgraph Physical["Physical Infrastructure"]
+        direction TB
+        subgraph Hardware["Hardware Components"]
+            R740["Dell R740 HPC Node\n(Expandable GPU/CPU)"]
+            Power["Power Infrastructure\n220V NEMA L6-20/30"]
+            Network["Network Infrastructure\n10/25/40GbE"]
+            PhysicalSec["Physical Security\nCAC + Biometrics"]
+        end
+        
+        subgraph Storage["Storage Architecture"]
+            NVMe["NVMe Arrays\nDirect I/O"]
+            Flash["All-Flash Storage"]
+            BackupSys["Backup Systems"]
+        end
+        
+        Hardware --> Storage
+    end
+
+    %% HPC and Neural Layer
+    subgraph Neural["HPC & Neural Processing"]
+        direction TB
+        subgraph Compute["Compute Orchestration"]
+            HPCAgg["HPC Aggregator\nScheduler & Router"]
+            MoE["MoE Swarm System"]
+            Episodic["Episodic Memory\nRL Feedback"]
+        end
+        
+        subgraph Models["Model Layer"]
+            LLMs["Local LLMs\nInference Models"]
+            LoRa["LoRa Adaptation"]
+            Training["Training Pipeline"]
+        end
+        
+        Compute --> Models
+    end
+
+    %% Cache and Data Layer
+    subgraph CacheLayer["Cache & Data Management"]
+        direction TB
+        RedisHot["Redis Hot Cache"]
+        PostgresWarm["PostgreSQL Warm Cache"]
+        LocalStorage["Local Server Storage"]
+        
+        RedisHot --> PostgresWarm
+        PostgresWarm --> LocalStorage
+    end
+
+    %% Security and Governance
+    subgraph SecGov["Security & Governance"]
+        direction TB
+        subgraph Security["Security Framework"]
+            QSafe["Quantum-Safe Protocols"]
+            Block["Blockchain Verification"]
+            SmartContract["Smart Contracts"]
+        end
+        
+        subgraph Privacy["Privacy & Compliance"]
+            DataPrivacy["Data Privacy Agents"]
+            CCPA["CCPA/GDPR Compliance"]
+            TokenGov["Token Governance"]
+        end
+        
+        Security --> Privacy
+    end
+
+    %% Agent System
+    subgraph Agents["Agent Ecosystem"]
+        direction TB
+        subgraph CoreAgents["Core Agents"]
+            Librarian["Librarian Agent"]
+            Potpie["Potpie Agent"]
+            Executive["Executive Agent"]
+        end
+        
+        subgraph SpecialAgents["Specialized Agents"]
+            DataAgent["Data Removal Agent"]
+            CompAgent["Compliance Agent"]
+            DevAgent["Development Agent"]
+        end
+        
+        CoreAgents --> SpecialAgents
+    end
+
+    %% ETL and Processing
+    subgraph Processing["ETL & Processing"]
+        direction TB
+        subgraph ETL["ETL Pipeline"]
+            Extract["Data Extraction"]
+            Transform["Transformation"]
+            Load["Loading"]
+        end
+        
+        subgraph TimeStrategy["Time Strategy"]
+            Queue["Queue Management"]
+            Batch["Batch Processing"]
+            RLFeed["RL Feedback Loop"]
+        end
+        
+        ETL --> TimeStrategy
+    end
+
+    %% Development and Monitoring
+    subgraph DevOps["Development & Operations"]
+        direction TB
+        subgraph Dev["Development"]
+            IDE["IDE Integration"]
+            Git["Version Control"]
+            CICD["CI/CD Pipeline"]
+        end
+        
+        subgraph Monitor["Monitoring"]
+            Metrics["System Metrics"]
+            Alerts["Alert System"]
+            Dashboard["Real-time Dashboard"]
+        end
+        
+        Dev --> Monitor
+    end
+
+    %% Platform Integration
+    subgraph Platforms["Knowledge Platforms"]
+        direction TB
+        Obsidian["Obsidian Neural Wiki"]
+        Notion["Notion Documentation"]
+        Linear["Linear Project Management"]
+    end
+
+    %% Core System Connections
+    Physical --> Neural
+    Neural --> CacheLayer
+    CacheLayer --> SecGov
+    Neural --> Agents
+    Agents --> Processing
+    Processing --> Platforms
+    SecGov --> DevOps
+    DevOps --> Processing
+
+    %% Cross-Component Integration
+    R740 --> HPCAgg
+    HPCAgg --> RedisHot
+    MoE --> CoreAgents
+    QSafe --> DataPrivacy
+    Librarian --> Extract
+    TimeStrategy --> Dashboard
+
+    classDef physical fill:#e6194B,stroke:#333,stroke-width:2px
+    classDef neural fill:#3cb44b,stroke:#333,stroke-width:2px
+    classDef cache fill:#ffe119,stroke:#333,stroke-width:2px
+    classDef security fill:#4363d8,stroke:#333,stroke-width:2px
+    classDef agents fill:#f58231,stroke:#333,stroke-width:2px
+    classDef processing fill:#911eb4,stroke:#333,stroke-width:2px
+    classDef devops fill:#42d4f4,stroke:#333,stroke-width:2px
+    classDef platforms fill:#f032e6,stroke:#333,stroke-width:2px
+
+    class Hardware,Storage physical
+    class Compute,Models neural
+    class RedisHot,PostgresWarm,LocalStorage cache
+    class Security,Privacy security
+    class CoreAgents,SpecialAgents agents
+    class ETL,TimeStrategy processing
+    class Dev,Monitor devops
+    class Obsidian,Notion,Linear platforms
+
+graph TB
+    subgraph Core["Core Infrastructure"]
+        subgraph Neural["Neural Layer"]
+            EM[Episodic Memory]
+            MoE[MoE Swarm]
+            NeurGraph[Neural Graph System]
+            EM --> MoE
+            MoE --> NeurGraph
+        end
+
+        subgraph Cache["Cache Layer"]
+            Redis[Redis Hot Cache]
+            Postgres[PostgreSQL Warm Cache]
+            LocalStore[Local Server Storage]
+            Redis --> Postgres
+            Postgres --> LocalStore
+        end
+
+        subgraph Security["Security Layer"]
+            QSafe[Quantum-Safe Protocols]
+            Block[Blockchain Verification]
+            Auth[Authentication]
+            QSafe --> Block
+            Block --> Auth
+        end
+    end
+
+    subgraph Agents["Agent System"]
+        subgraph CoreAgents["Core Agents"]
+            Lib[Librarian Agent]
+            Pot[Potpie Agent]
+            Exec[Executive Agent]
+        end
+
+        subgraph PlatformAgents["Platform Agents"]
+            ObsAgent[Obsidian Agent]
+            NotAgent[Notion Agent]
+            LinAgent[Linear Agent]
+        end
+
+        CoreAgents --> PlatformAgents
+    end
+
+    subgraph ETL["ETL Pipeline"]
+        subgraph Extraction["Data Extraction"]
+            Claude[Claude Scraper]
+            ChatGPT[ChatGPT Scraper]
+            DeepRes[Deep Research]
+            Tess[Tesseract OCR]
+        end
+
+        subgraph Transform["Data Transform"]
+            Process[Data Processing]
+            Enrich[Data Enrichment]
+            Valid[Validation]
+        end
+
+        subgraph Load["Data Load"]
+            StyleTrans[Style Transform]
+            DistKnow[Knowledge Distribution]
+        end
+
+        Extraction --> Transform
+        Transform --> Load
+    end
+
+    subgraph Platforms["Knowledge Platforms"]
+        Obs[Obsidian - Neural Wiki]
+        Not[Notion - Documentation]
+        Lin[Linear - Project Management]
+    end
+
+    subgraph Dev["Development"]
+        IDE[IDE Integration]
+        Git[Git Version Control]
+        CI[CI/CD Pipeline]
+    end
+
+    Neural --> Cache
+    Cache --> Security
+    Neural --> Agents
+    Agents --> ETL
+    ETL --> Platforms
+    Dev --> ETL
+    Security --> Dev
+
+    classDef primary fill:#f9f,stroke:#333,stroke-width:2px
+    classDef secondary fill:#bbf,stroke:#333,stroke-width:2px
+    classDef tertiary fill:#bfb,stroke:#333,stroke-width:2px
+    
+    class Neural,Cache,Security primary
+    class Agents,ETL secondary
+    class Platforms,Dev tertiary
+
