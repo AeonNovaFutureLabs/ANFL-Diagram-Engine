@@ -41,3 +41,9 @@ class ExportHandler:
     def to_notion_markdown(diagrams: str) -> str:
         """Convert to Notion-compatible markdown."""
         return f"```mermaid\n{diagrams}\n```"
+
+    @staticmethod
+    def create_latex(diagrams: str) -> str:
+        """Generate LaTeX document with TikZ diagrams."""
+        from utils.latex_converter import LaTeXConverter
+        return LaTeXConverter.mermaid_to_tikz(diagrams)

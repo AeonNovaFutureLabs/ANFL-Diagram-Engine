@@ -15,18 +15,24 @@ st.set_page_config(
 with open("styles.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+def load_sample_diagram():
+    with open("attached_assets/Pasted-graph-TB-Physical-Layer-subgraph-Physical-Physical-Infrastructure-direction-TB-1740366126683.txt", "r") as f:
+        return f.read()
+
 def main():
     st.title("Mermaid Diagram Processor")
 
     # Input area for diagrams
+    sample_diagram = load_sample_diagram()
     diagram_input = st.text_area(
         "Enter your Mermaid diagram(s)",
+        value=sample_diagram,
         height=300,
         help="Paste your Mermaid diagram content here"
     )
 
     # Platform selection
-    platforms = ['Notion', 'Obsidian', 'Linear']
+    platforms = ['Notion', 'Obsidian', 'Linear', 'LaTeX']
     selected_platform = st.selectbox("Select platform for export", platforms)
 
     if diagram_input:
@@ -39,27 +45,33 @@ def main():
         st.markdown("### Preview")
         st.markdown(f"```mermaid\n{themed_diagram}\n```")
 
-        # Convert for selected platform
-        platform_output = PlatformConverter.convert_for_platform(
-            themed_diagram, 
-            selected_platform
-        )
-
         # Export options
         col1, col2 = st.columns(2)
 
         with col1:
             st.markdown("### Platform Export")
-            st.code(platform_output, language="markdown")
 
-            # Download as markdown
-            platform_bytes = platform_output.encode()
-            st.download_button(
-                f"Download for {selected_platform}",
-                platform_bytes,
-                f"diagram_{selected_platform.lower()}.md",
-                "text/markdown"
-            )
+            if selected_platform == 'LaTeX':
+                latex_output = ExportHandler.create_latex(themed_diagram)
+                st.code(latex_output, language="latex")
+                st.download_button(
+                    "Download LaTeX",
+                    latex_output.encode(),
+                    "diagram.tex",
+                    "text/plain"
+                )
+            else:
+                platform_output = PlatformConverter.convert_for_platform(
+                    themed_diagram, 
+                    selected_platform
+                )
+                st.code(platform_output, language="markdown")
+                st.download_button(
+                    f"Download for {selected_platform}",
+                    platform_output.encode(),
+                    f"diagram_{selected_platform.lower()}.md",
+                    "text/markdown"
+                )
 
         with col2:
             st.markdown("### PDF Export")

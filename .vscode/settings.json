@@ -1,0 +1,23 @@
+{
+    "editor.fontFamily": "JetBrains Mono",
+    "editor.fontSize": 14,
+    "editor.lineHeight": 1.2,
+    "editor.letterSpacing": 0.5,
+    "workbench.colorCustomizations": {
+        "editor.background": "#E6E6E6",
+        "editor.foreground": "#1A1A2E",
+        "editorLineNumber.foreground": "#CD7F32",
+        "editorLineNumber.activeForeground": "#1A1A2E"
+    },
+    "python.analysis.typeCheckingMode": "basic",
+    "python.formatting.provider": "black",
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "files.associations": {
+        "*.mermaid": "mermaid"
+    }
+}
